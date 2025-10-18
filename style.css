@@ -1,0 +1,272 @@
+/* 🎨 === Estilos generales === */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* 🟡 === Encabezado === */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffd600;
+  padding: 10px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 50px;
+}
+
+h1 {
+  margin: 0;
+  color: #222;
+  font-size: 22px;
+}
+
+/* 🛍️ Menú de navegación */
+nav {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+/* 🛒 Botón del carrito */
+.btn-carrito, 
+.carrito-btn {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-carrito:hover,
+.carrito-btn:hover {
+  background-color: #e64a19;
+}
+
+/* 🧰 === Secciones === */
+main {
+  padding: 20px;
+}
+
+.seccion {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.seccion.activa {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🧱 === Catálogo === */
+.productos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.producto {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 200px;
+}
+
+.producto:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.producto img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 10px auto;
+  display: block;
+}
+
+.precio {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.producto button,
+.agregar {
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.producto button:hover,
+.agregar:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* 🛒 === Carrito lateral === */
+#carrito {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#carrito.visible {
+  transform: translateX(0);
+}
+
+/* === Overlay gris === */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+}
+
+#overlay.visible {
+  display: block;
+}
+
+/* === Items dentro del carrito === */
+.item-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  background: #f8f8f8;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.item-carrito img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.info-item {
+  flex: 1;
+}
+
+.item-carrito .precio {
+  color: #555;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* === Botón eliminar === */
+.eliminar {
+  background: #ff4d4d;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.eliminar:hover {
+  background: #e63939;
+}
+
+/* === Botón finalizar compra === */
+#finalizar-compra {
+  background: #388e3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.2s;
+}
+
+#finalizar-compra:hover {
+  background: #2e7d32;
+  transform: scale(1.05);
+}
+
+/* ✨ === Footer === */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #222;
+  color: white;
+  font-size: 14px;
+}
+
+/* 🧱 Evitar que el contenido quede debajo del encabezado */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1002;
+}
+
+main, section {
+  margin-top: 110px; /* ajusta según la altura real del header */
+}

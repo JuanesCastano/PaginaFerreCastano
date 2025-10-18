@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ferretería Castaño S.A.S.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 🟡 Encabezado -->
+  <header>
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo Ferretería" class="logo" />
+      <h1>Ferretería Castaño S.A.S.</h1>
+    </div>
+
+    <nav class="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#quienes">Quiénes somos</a>
+      <a href="#contacto">Contáctanos</a>
+      <button id="abrir-carrito" class="carrito-btn">🛒 (<span id="contador">0</span>)</button>
+    </nav>
+  </header>
+
+  <!-- 🔹 Overlay gris -->
+  <div id="overlay" class="oculto"></div>
+
+  <!-- 🛒 Carrito lateral -->
+  <aside id="carrito">
+    <h2>Tu carrito</h2>
+    <div id="items-carrito"></div>
+    <p id="total">Total: $0</p>
+    <button id="finalizar-compra">Finalizar compra</button>
+    <button id="cerrar-carrito" class="cerrar-carrito">Cerrar ✖</button>
+  </aside>
+
+  <!-- 📄 Contenido principal -->
+  <main>
+    <!-- 🏠 Sección Inicio -->
+    <section id="inicio" class="seccion activa">
+      <h2>Bienvenido</h2>
+      <p>Encuentra las mejores herramientas y productos de ferretería para tus proyectos.</p>
+    </section>
+
+    <!-- 🧰 Sección Catálogo -->
+    <section id="catalogo" class="seccion">
+      <h2>Catálogo</h2>
+      <p>Explora nuestros productos más destacados:</p>
+
+      <div class="productos">
+        <div class="producto">
+          <img src="martillo.png" alt="Martillo" />
+          <h3>Martillo</h3>
+          <p>$25.000</p>
+          <button class="agregar">Agregar</button>
+        </div>
+
+        <div class="producto">
+          <img src="flexometro.jpg" alt="Flexómetro Stanley" />
+          <h3>Flexómetro Stanley</h3>
+          <p>$35.000</p>
+          <button class="agregar">Agregar</button>
+        </div>
+
+        <div class="producto">
+          <img src="bateria.png" alt="Batería" />
+          <h3>Batería</h3>
+          <p>$200.000</p>
+          <button class="agregar">Agregar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🧍 Sección Quiénes somos -->
+    <section id="quienes" class="seccion">
+      <h2>Quiénes somos</h2>
+      <p>
+        En <strong>Ferretería Castaño S.A.S.</strong> Somos una ferreteria con mas de 30 años de antiguedad trabajando con algunas de las empresas mas grandes de el pais
+      </p>
+    </section>
+
+    <!-- 📞 Sección Contáctanos -->
+    <section id="contacto" class="seccion">
+      <h2>Contáctanos</h2>
+      <p>Puedes comunicarte con nosotros a través de:</p>
+      <ul>
+        <li>📍 Dirección: Calle 45 #12-34, Yopal, Casanare</li>
+        <li>📞 Teléfono: (608) 123 4567</li>
+        <li>📧 Email: contacto@ferreteriacastaño.com</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
