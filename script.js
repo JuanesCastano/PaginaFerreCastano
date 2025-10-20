@@ -1,83 +1,74 @@
 // === CAMBIO DE SECCIONES ===
-const links = document.querySelectorAll("nav a");
+const enlaces = document.querySelectorAll("nav a");
 const secciones = document.querySelectorAll(".seccion");
 
-links.forEach(link => {
-  link.addEventListener("click", e => {
+enlaces.forEach(enlace => {
+  enlace.addEventListener("click", e => {
     e.preventDefault();
-    links.forEach(l => l.classList.remove("activo"));
-    link.classList.add("activo");
+    enlaces.forEach(a => a.classList.remove("activo"));
+    enlace.classList.add("activo");
 
-    const id = link.getAttribute("href").replace("#", "");
-    secciones.forEach(s => s.classList.remove("activa"));
+    const id = enlace.getAttribute("data-seccion");
+    secciones.forEach(sec => sec.classList.remove("activa"));
     document.getElementById(id).classList.add("activa");
   });
 });
 
-// === PRODUCTOS DINÁMICOS ===
-const productosDiv = document.querySelector(".productos");
+// === CARRITO ===
+let carrito = [];
+const carritoDiv = document.getElementById("carrito");
+const carritoItems = document.getElementById("carrito-items");
+const contador = document.getElementById("contador");
+const total = document.getElementById("total");
 
-const productos = [
-  { nombre: "Martillo", precio: 25000, imagen: "martillo.png" },
-  { nombre: "bateria", precio: 15000, imagen: "bateria.png" },
-  { nombre: "flexometro", precio: 18000, imagen: "flexometro.jpg" },
-  { nombre: "Taladro", precio: 180000, imagen: "taladro.jpg" },
-  { nombre: "Llave inglesa", precio: 28000, imagen: "llave.png" }
-];
-
-
-productos.forEach(p => {
-  const div = document.createElement("div");
-  div.classList.add("producto");
-  div.innerHTML = `
-    <img src="${p.imagen}" alt="${p.nombre}">
-    <h3>${p.nombre}</h3>
-    <p>$${p.precio.toLocaleString()}</p>
-    <button onclick="agregarAlCarrito('${p.nombre}', ${p.precio})">Agregar</button>
-  `;
-  productosDiv.appendChild(div);
+document.getElementById("carrito-btn").addEventListener("click", () => {
+  carritoDiv.classList.toggle("activo");
 });
 
-// === CARRITO ===
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+function agregarAlCarrito(nombre, precio, img) {
+  const item = carrito.find(i => i.nombre === nombre);
+  if (item) item.cantidad++;
+  else carrito.push({ nombre, precio, img, cantidad: 1 });
+  actualizarCarrito();
+}
 
 function actualizarCarrito() {
-  const contador = document.getElementById("contador");
-  const carritoItems = document.getElementById("carrito-items");
-  const total = document.getElementById("total");
   carritoItems.innerHTML = "";
+  let totalCompra = 0;
 
-  carrito.forEach((item, i) => {
+  carrito.forEach(item => {
+    totalCompra += item.precio * item.cantidad;
     const div = document.createElement("div");
+    div.classList.add("item-carrito");
     div.innerHTML = `
-      ${item.nombre} - $${item.precio.toLocaleString()}
-      <button onclick="eliminarItem(${i})">❌</button>
+      <img src="${item.img}" width="40"> 
+      <span>${item.nombre}</span>
+      <span>x${item.cantidad}</span>
+      <button onclick="aumentarCantidad('${item.nombre}')">+</button>
     `;
     carritoItems.appendChild(div);
   });
 
-  contador.textContent = carrito.length;
-  total.textContent = carrito.reduce((acc, i) => acc + i.precio, 0).toLocaleString();
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+  contador.textContent = carrito.reduce((acc, i) => acc + i.cantidad, 0);
+  total.textContent = `Total: $${totalCompra.toLocaleString()}`;
 }
 
-function agregarAlCarrito(nombre, precio) {
-  carrito.push({ nombre, precio });
+function aumentarCantidad(nombre) {
+  const item = carrito.find(i => i.nombre === nombre);
+  if (item) item.cantidad++;
   actualizarCarrito();
 }
 
-function eliminarItem(index) {
-  carrito.splice(index, 1);
-  actualizarCarrito();
-}
+document.getElementById("finalizarCompra").addEventListener("click", () => {
+  if (carrito.length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+  alert("Compra finalizada. Se generará un documento con tu pedido.");
+});
 
-function vaciarCarrito() {
-  carrito = [];
-  actualizarCarrito();
-}
-
-function mostrarCarrito() {
-  document.getElementById("carrito").classList.toggle("activo");
-}
-
-actualizarCarrito();
+// === FORMULARIO ===
+document.getElementById("formContacto").addEventListener("submit", e => {
+  e.preventDefault();
+  alert("Mensaje enviado. Se guardará en un archivo .docx (simulado).");
+});
