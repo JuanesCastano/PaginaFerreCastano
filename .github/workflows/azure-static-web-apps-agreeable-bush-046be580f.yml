@@ -15,19 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Build And Deploy
+      - name: Build and Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
+          #### 🔑 Token de despliegue (NO pegar directamente el valor aquí)
+          #### Debe existir como secreto en tu repo:
+          #### Settings → Secrets → Actions → AZURE_STATIC_WEB_APPS_API_TOKEN
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (e.g., PR comments)
+
+          #### 🔐 Token de GitHub (para PRs y comentarios)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+          #### 🚀 Acción: subir el contenido compilado
           action: "upload"
-          #### Configura tus rutas aquí:
-          app_location: "/" # Ruta del código fuente de la app (por ejemplo: "/" o "app")
-          api_location: "" # Si no tienes API, deja vacío
-          output_location: "build" # Carpeta donde se genera la app (por ejemplo "build" o "dist")
+
+          #### 📂 Rutas de tu proyecto
+          #### app_location: raíz del código fuente de tu web
+          #### api_location: carpeta de funciones (si no tienes, déjalo vacío)
+          #### output_location: carpeta donde se genera el build (por ejemplo "dist" o "build")
+          app_location: "/"
+          api_location: ""
+          output_location: "build"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
