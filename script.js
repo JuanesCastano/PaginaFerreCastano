@@ -128,21 +128,90 @@ class ListaDoble {
   }
 }
 
-// === EJEMPLO DE USO CON TU CARRITO EXISTENTE ===
+// === LISTA DE PRODUCTOS ===
 const listaProductos = new ListaDoble();
 
-// Función para agregar producto a la lista y al carrito
-function agregarProducto(nombre, precio, img) {
-  const producto = new Producto(nombre, precio, img);
-  listaProductos.adicionar(producto);
-  // También lo agregamos al carrito visual
-  agregarAlCarrito(nombre, precio, img);
+// === FUNCIONES PARA EL CARRITO ===
+function agregarAlCarrito(nombre, precio, img) {
+  const carritoItems = document.getElementById("carrito-items");
+  const totalElem = document.getElementById("total");
+  const contador = document.getElementById("contador");
+
+  const itemDiv = document.createElement("div");
+  itemDiv.textContent = `${nombre} - $${precio.toLocaleString()}`;
+  carritoItems.appendChild(itemDiv);
+
+  // Actualizar total
+  const total = [...carritoItems.children].reduce((sum, div) => {
+    return sum + parseInt(div.textContent.split("$")[1].replace(/,/g, ""));
+  }, 0);
+  totalElem.textContent = `Total: $${total.toLocaleString()}`;
+
+  // Actualizar contador
+  contador.textContent = carritoItems.children.length;
 }
 
-// Ejemplo de agregar productos automáticamente
-agregarProducto("Martillo", 22000, "img/martillo.png");
-agregarProducto("Taladro", 150000, "img/taladro.png");
-agregarProducto("Llave Inglesa", 30000, "img/llave.png");
+function vaciarCarrito() {
+  document.getElementById("carrito-items").innerHTML = "";
+  document.getElementById("total").textContent = "Total: $0";
+  document.getElementById("contador").textContent = "0";
+}
 
-// Si quieres, puedes recorrer la lista de productos
-// console.log([...listaProductos].map(p => p.toString()));
+// === CARGAR PRODUCTOS DESDE ENDPOINT ===
+function cargarProductos() {
+  fetch("https://miapp.azurewebsites.net/api/productos") // Reemplaza con tu URL de Azure
+    .then(res => res.json())
+    .then(productos => {
+      productos.forEach(p => {
+        listaProductos.adicionar(new Producto(p.nombre, p.precio, p.img));
+      });
+
+      // Renderizar productos en HTML
+      const productosContainer = document.querySelector(".productos");
+      if (productosContainer) {
+        productosContainer.innerHTML = [...listaProductos].map(p => `
+          <div class="producto">
+            <img src="${p.img}" alt="${p.nombre}" />
+            <h3>${p.nombre}</h3>
+            <p>$${p.precio.toLocaleString()}</p>
+            <button onclick="agregarAlCarrito('${p.nombre}', ${p.precio}, '${p.img}')">Agregar al carrito</button>
+          </div>
+        `).join("");
+      }
+    })
+    .catch(err => console.error("Error cargando productos:", err));
+}
+
+// === ENVIAR FORMULARIO DE CONTACTO A ENDPOINT ===
+function enviarContacto() {
+  const form = document.getElementById("formContacto");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      nombre: form.nombre.value,
+      correo: form.correo.value,
+      mensaje: form.mensaje.value
+    };
+
+    fetch("https://miapp.azurewebsites.net/api/contacto", { // Reemplaza con tu URL de Azure
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(resp => {
+      alert("Mensaje enviado correctamente!");
+      form.reset();
+    })
+    .catch(err => console.error("Error enviando contacto:", err));
+  });
+}
+
+// === INICIALIZACIÓN ===
+document.addEventListener("DOMContentLoaded", () => {
+  cargarProductos();
+  enviarContacto();
+});
