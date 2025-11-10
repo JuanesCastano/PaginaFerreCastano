@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ferretería Castaño S.A.S. - Inicio</title>
+  <title>Ferretería Castaño S.A.S. - Productos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -25,8 +25,33 @@
   <!-- MAIN -->
   <main>
     <section>
-      <h2>Bienvenido a Ferretería Castaño S.A.S.</h2>
-      <p>Todo lo que necesitas para tus proyectos, en un solo lugar.</p>
+      <h2>Catálogo de Productos</h2>
+      <div class="productos">
+        <div class="producto">
+          <img src="martillo.png" alt="Martillo" />
+          <h3>Martillo</h3>
+          <p>$22.000</p>
+          <button onclick="agregarAlCarrito('Martillo', 22000, 'martillo.png')">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+          <img src="bateria.png" alt="Bateria" />
+          <h3>Bateria</h3>
+          <p>$12.000</p>
+          <button onclick="agregarAlCarrito('Bateria', 12000, 'bateria.png')">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+          <img src="taladro.jpg" alt="Taladro" />
+          <h3>Taladro</h3>
+          <p>$150.000</p>
+          <button onclick="agregarAlCarrito('Taladro', 150000, 'taladro.jpg')">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+          <img src="llave.png" alt="Llave Inglesa" />
+          <h3>Llave Inglesa</h3>
+          <p>$30.000</p>
+          <button onclick="agregarAlCarrito('Llave Inglesa', 30000, 'llave.png')">Agregar al carrito</button>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -47,3 +72,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
